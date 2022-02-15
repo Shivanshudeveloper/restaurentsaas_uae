@@ -39,6 +39,9 @@ import { Scrollbar } from "../scrollbar";
 import { DashboardSidebarSection } from "./dashboard-sidebar-section";
 import { OrganizationPopover } from "./organization-popover";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import QrCode2Icon from "@mui/icons-material/QrCode2";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 
 const getSections = (t) => [
   {
@@ -114,9 +117,29 @@ const getSections = (t) => [
         ],
       },
       {
+        title: t("Manage Customers"),
+        path: "/dashboard/manageCustomers",
+        icon: <PeopleAltIcon fontSize="small" />,
+        children: [
+          {
+            title: t("Customers List"),
+            path: "/dashboard/manageCustomers",
+          },
+          {
+            title: t("Coupons List"),
+            path: "/dashboard/manageCustomers/couponList",
+          },
+        ],
+      },
+      {
+        title: t("Manage QR Codes"),
+        path: "/dashboard/manageQR",
+        icon: <QrCode2Icon fontSize="small" />,
+      },
+      {
         title: t("Customers"),
         path: "/dashboard/customers",
-        icon: <UsersIcon fontSize="small" />,
+        icon: <AssignmentIndIcon fontSize="small" />,
         children: [
           {
             title: t("List"),

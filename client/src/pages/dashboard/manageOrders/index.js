@@ -354,7 +354,6 @@ const OrdersList = () => {
   const [type, setType] = useState(0);
   const handleChange = (event) => {
     setType(event.target.value);
-    console.log(type);
   };
   return (
     <>
