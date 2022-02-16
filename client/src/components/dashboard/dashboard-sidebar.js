@@ -42,6 +42,8 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import FeedIcon from "@mui/icons-material/Feed";
+import SendIcon from "@mui/icons-material/Send";
 
 const getSections = (t) => [
   {
@@ -62,27 +64,27 @@ const getSections = (t) => [
         path: "/dashboard/finance",
         icon: <ChartPieIcon fontSize="small" />,
       },
-      {
-        title: t("Logistics"),
-        path: "/dashboard/logistics",
-        icon: <TruckIcon fontSize="small" />,
-        chip: (
-          <Chip
-            color="secondary"
-            label={
-              <Typography
-                sx={{
-                  fontSize: "10px",
-                  fontWeight: "600",
-                }}
-              >
-                NEW
-              </Typography>
-            }
-            size="small"
-          />
-        ),
-      },
+      // {
+      //   title: t("Logistics"),
+      //   path: "/dashboard/logistics",
+      //   icon: <TruckIcon fontSize="small" />,
+      //   chip: (
+      //     <Chip
+      //       color="secondary"
+      //       label={
+      //         <Typography
+      //           sx={{
+      //             fontSize: "10px",
+      //             fontWeight: "600",
+      //           }}
+      //         >
+      //           NEW
+      //         </Typography>
+      //       }
+      //       size="small"
+      //     />
+      //   ),
+      // },
       {
         title: t("Account"),
         path: "/dashboard/account",
@@ -200,84 +202,114 @@ const getSections = (t) => [
           },
         ],
       },
-    ],
-  },
-  {
-    title: t("Platforms"),
-    items: [
       {
-        title: t("Job Listings"),
-        path: "/dashboard/jobs",
-        icon: <OfficeBuildingIcon fontSize="small" />,
+        title: t("Feedback Forms"),
+        path: "/dashboard/forms",
+        icon: <FeedIcon fontSize="small" />,
         children: [
           {
-            title: t("Browse"),
-            path: "/dashboard/jobs",
+            title: t("Forms List"),
+            path: "/dashboard/forms",
           },
           {
-            title: t("Details"),
-            path: "/dashboard/jobs/companies/1",
-          },
-          {
-            title: t("Create"),
-            path: "/dashboard/jobs/new",
+            title: t("Add Feedback"),
+            path: "/dashboard/forms/feedback",
           },
         ],
       },
       {
-        title: t("Social Media"),
-        path: "/dashboard/social",
-        icon: <ShareIcon fontSize="small" />,
+        title: t("Email & SMS"),
+        path: "/dashboard/messages",
+        icon: <SendIcon fontSize="small" />,
         children: [
           {
-            title: t("Profile"),
-            path: "/dashboard/social/profile",
+            title: t("Messages List"),
+            path: "/dashboard/messages",
           },
           {
-            title: t("Feed"),
-            path: "/dashboard/social/feed",
-          },
-        ],
-      },
-      {
-        title: t("Blog"),
-        path: "/blog",
-        icon: <NewspaperIcon fontSize="small" />,
-        children: [
-          {
-            title: t("Post List"),
-            path: "/blog",
-          },
-          {
-            title: t("Post Details"),
-            path: "/blog/1",
-          },
-          {
-            title: t("Post Create"),
-            path: "/blog/new",
+            title: t("Send Message"),
+            path: "/dashboard/messages/send",
           },
         ],
       },
     ],
   },
+  // {
+  //   title: t("Platforms"),
+  //   items: [
+  //     {
+  //       title: t("Job Listings"),
+  //       path: "/dashboard/jobs",
+  //       icon: <OfficeBuildingIcon fontSize="small" />,
+  //       children: [
+  //         {
+  //           title: t("Browse"),
+  //           path: "/dashboard/jobs",
+  //         },
+  //         {
+  //           title: t("Details"),
+  //           path: "/dashboard/jobs/companies/1",
+  //         },
+  //         {
+  //           title: t("Create"),
+  //           path: "/dashboard/jobs/new",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       title: t("Social Media"),
+  //       path: "/dashboard/social",
+  //       icon: <ShareIcon fontSize="small" />,
+  //       children: [
+  //         {
+  //           title: t("Profile"),
+  //           path: "/dashboard/social/profile",
+  //         },
+  //         {
+  //           title: t("Feed"),
+  //           path: "/dashboard/social/feed",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       title: t("Blog"),
+  //       path: "/blog",
+  //       icon: <NewspaperIcon fontSize="small" />,
+  //       children: [
+  //         {
+  //           title: t("Post List"),
+  //           path: "/blog",
+  //         },
+  //         {
+  //           title: t("Post Details"),
+  //           path: "/blog/1",
+  //         },
+  //         {
+  //           title: t("Post Create"),
+  //           path: "/blog/new",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     title: t("Apps"),
     items: [
-      {
-        title: t("Kanban"),
-        path: "/dashboard/kanban",
-        icon: <ClipboardListIcon fontSize="small" />,
-      },
-      {
-        title: t("Mail"),
-        path: "/dashboard/mail",
-        icon: <MailIcon fontSize="small" />,
-      },
-      {
-        title: t("Chat"),
-        path: "/dashboard/chat",
-        icon: <ChatAlt2Icon fontSize="small" />,
-      },
+      // {
+      //   title: t("Kanban"),
+      //   path: "/dashboard/kanban",
+      //   icon: <ClipboardListIcon fontSize="small" />,
+      // },
+      // {
+      //   title: t("Mail"),
+      //   path: "/dashboard/mail",
+      //   icon: <MailIcon fontSize="small" />,
+      // },
+      // {
+      //   title: t("Chat"),
+      //   path: "/dashboard/chat",
+      //   icon: <ChatAlt2Icon fontSize="small" />,
+      // },
       {
         title: t("Calendar"),
         path: "/dashboard/calendar",
@@ -285,60 +317,60 @@ const getSections = (t) => [
       },
     ],
   },
-  {
-    title: t("Pages"),
-    items: [
-      {
-        title: t("Auth"),
-        path: "/authentication",
-        icon: <LockClosedIcon fontSize="small" />,
-        children: [
-          {
-            title: t("Register"),
-            path: "/authentication/register?disableGuard=true",
-          },
-          {
-            title: t("Login"),
-            path: "/authentication/login?disableGuard=true",
-          },
-        ],
-      },
-      {
-        title: t("Pricing"),
-        path: "/dashboard/pricing",
-        icon: <CreditCardIcon fontSize="small" />,
-      },
-      {
-        title: t("Checkout"),
-        path: "/checkout",
-        icon: <CashIcon fontSize="small" />,
-      },
-      {
-        title: t("Contact"),
-        path: "/contact",
-        icon: <MailOpenIcon fontSize="small" />,
-      },
-      {
-        title: t("Error"),
-        path: "/error",
-        icon: <XCircleIcon fontSize="small" />,
-        children: [
-          {
-            title: "401",
-            path: "/401",
-          },
-          {
-            title: "404",
-            path: "/404",
-          },
-          {
-            title: "500",
-            path: "/500",
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   title: t("Pages"),
+  //   items: [
+  //     {
+  //       title: t("Auth"),
+  //       path: "/authentication",
+  //       icon: <LockClosedIcon fontSize="small" />,
+  //       children: [
+  //         {
+  //           title: t("Register"),
+  //           path: "/authentication/register?disableGuard=true",
+  //         },
+  //         {
+  //           title: t("Login"),
+  //           path: "/authentication/login?disableGuard=true",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       title: t("Pricing"),
+  //       path: "/dashboard/pricing",
+  //       icon: <CreditCardIcon fontSize="small" />,
+  //     },
+  //     {
+  //       title: t("Checkout"),
+  //       path: "/checkout",
+  //       icon: <CashIcon fontSize="small" />,
+  //     },
+  //     {
+  //       title: t("Contact"),
+  //       path: "/contact",
+  //       icon: <MailOpenIcon fontSize="small" />,
+  //     },
+  //     {
+  //       title: t("Error"),
+  //       path: "/error",
+  //       icon: <XCircleIcon fontSize="small" />,
+  //       children: [
+  //         {
+  //           title: "401",
+  //           path: "/401",
+  //         },
+  //         {
+  //           title: "404",
+  //           path: "/404",
+  //         },
+  //         {
+  //           title: "500",
+  //           path: "/500",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];
 
 export const DashboardSidebar = (props) => {
@@ -466,7 +498,7 @@ export const DashboardSidebar = (props) => {
               borderColor: "#2D3748", // dark divider
             }}
           />
-          <Box sx={{ p: 2 }}>
+          {/* <Box sx={{ p: 2 }}>
             <Typography color="neutral.100" variant="subtitle2">
               {t("Need Help?")}
             </Typography>
@@ -484,7 +516,7 @@ export const DashboardSidebar = (props) => {
                 {t("Documentation")}
               </Button>
             </NextLink>
-          </Box>
+          </Box> */}
         </Box>
       </Scrollbar>
       <OrganizationPopover

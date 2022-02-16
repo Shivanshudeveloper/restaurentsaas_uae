@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2093378b-9170-4d1e-8ccc-88074ae7b61f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/client/src/components/authentication/amplify-login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/authentication/amplify-login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/authentication/firebase-login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/authentication/firebase-login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/authentication/jwt-login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/authentication/jwt-login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/contact/contact-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/contact/contact-form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/dashboard-sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/dashboard/dashboard-sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/authentication/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/authentication/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/authentication/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/authentication/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/dashboard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/dashboard/index.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="25BYKT0Y8OPmL2eoJzshf2oEiQr" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2093378b-9170-4d1e-8ccc-88074ae7b61f" name="Default Changelist" comment="" />
+      <created>1645001887448</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1645001887448</updated>
+    </task>
+    <servers />
+  </component>
+</project>

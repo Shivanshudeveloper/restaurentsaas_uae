@@ -1,4 +1,15 @@
-import { Box, Button, Grid, Link, MenuItem, Select, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  Link,
+  MenuItem,
+  Rating,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { typography } from "@mui/system";
 
 export const ContactForm = () => {
   const handleSubmit = (event) => {
@@ -7,89 +18,33 @@ export const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid
-        container
-        spacing={3}
-      >
-        <Grid
-          item
-          xs={12}
-          sm={6}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
-            Full Name *
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
+            First Name *
           </Typography>
-          <TextField
-            fullWidth
-            name="name"
-            required
-          />
+          <TextField fullWidth name="name" required />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
-            Company Name*
+        <Grid item xs={12} sm={6}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
+            Last Name*
           </Typography>
-          <TextField
-            fullWidth
-            name="company"
-            required
-          />
+          <TextField fullWidth name="company" required />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
-            Work Email *
+        <Grid item xs={12} sm={6}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
+            Email
           </Typography>
-          <TextField
-            fullWidth
-            name="email"
-            type="email"
-            required
-          />
+          <TextField fullWidth name="email" type="email" required />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
+        <Grid item xs={12} sm={6}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
             Phone Number *
           </Typography>
-          <TextField
-            fullWidth
-            name="phone"
-            required
-            type="tel"
-          />
+          <TextField fullWidth name="phone" required type="tel" />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
+        {/* <Grid item xs={12} sm={6}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
             Company Size
           </Typography>
           <Select fullWidth>
@@ -98,15 +53,8 @@ export const ContactForm = () => {
             <MenuItem value="31-50">31-50</MenuItem>
           </Select>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
+        <Grid item xs={12} sm={6}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
             Team
           </Typography>
           <Select fullWidth>
@@ -114,65 +62,47 @@ export const ContactForm = () => {
             <MenuItem value="design">Design</MenuItem>
           </Select>
         </Grid>
-        <Grid
-          item
-          xs={12}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
+        <Grid item xs={12}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
             Project Budget *
           </Typography>
-          <Select
-            fullWidth
-            required
-          >
+          <Select fullWidth required>
             <MenuItem value={20000}>$20,000+</MenuItem>
             <MenuItem value={50000}>$50,000+</MenuItem>
           </Select>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
+        </Grid> */}
+        <Grid item xs={12}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
             Message
           </Typography>
-          <TextField
-            fullWidth
-            name="message"
-            required
-            multiline
-            rows={6}
-          />
+          <TextField fullWidth name="message" required multiline rows={6} />
         </Grid>
       </Grid>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          mt: 3
+          mt: 2,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
         }}
       >
-        <Button
-          fullWidth
-          size="large"
-          variant="contained"
-        >
-          Let&apos;s Talk
+        <Typography variant="subtitle2">Please give us a Rating: </Typography>
+        <Rating name="half-rating" precision={0.5} />
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 3,
+        }}
+      >
+        <Button fullWidth size="large" variant="contained">
+          Submit Feedback
         </Button>
       </Box>
-      <Typography
-        color="textSecondary"
-        sx={{ mt: 3 }}
-        variant="body2"
-      >
-        By submitting this, you agree to the
-        {' '}
+      <Typography color="textSecondary" sx={{ mt: 3 }} variant="body2">
+        By submitting this, you agree to the{" "}
         <Link
           color="textPrimary"
           href="#"
@@ -180,10 +110,8 @@ export const ContactForm = () => {
           variant="subtitle2"
         >
           Privacy Policy
-        </Link>
-        {' '}
-        and
-        {' '}
+        </Link>{" "}
+        and{" "}
         <Link
           color="textPrimary"
           href="#"
