@@ -44,6 +44,7 @@ import QrCode2Icon from "@mui/icons-material/QrCode2";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import FeedIcon from "@mui/icons-material/Feed";
 import SendIcon from "@mui/icons-material/Send";
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
 const getSections = (t) => [
   {
@@ -203,6 +204,17 @@ const getSections = (t) => [
         ],
       },
       {
+        title: t("Reservations"),
+        path: "/dashboard/reservations",
+        icon: <BookmarkAddIcon fontSize="small" />,
+        children: [
+          {
+            title: t("Reservation List"),
+            path: "/dashboard/reservations",
+          }
+        ],
+      },
+      {
         title: t("Feedback Forms"),
         path: "/dashboard/forms",
         icon: <FeedIcon fontSize="small" />,
@@ -230,6 +242,10 @@ const getSections = (t) => [
             title: t("Send Message"),
             path: "/dashboard/messages/send",
           },
+          {
+            title: t("Template"),
+            path: "/dashboard/messages/templates",
+          }
         ],
       },
     ],

@@ -215,6 +215,22 @@ const AddNewRepair = () => {
               {value === "Email" ? (
                 <>
                   <Stack spacing={2}>
+                    {/* Fetch all the templates from server and map them to the menu items */}
+                    <TextField
+                      sx={{ my: 1 }}
+                      fullWidth
+                      label="Select template (Optional)"
+                      select
+                      variant="outlined"
+                    >
+                      <MenuItem value="1">Title 1</MenuItem>
+                      <MenuItem value="2">Title 2</MenuItem>
+                      <MenuItem value="3">Title 3</MenuItem>
+                      <MenuItem value="4">Title 4</MenuItem>
+                    </TextField>
+
+                    <Divider>OR</Divider>
+
                     <TextField
                       fullWidth
                       label="Sender Email"
@@ -239,7 +255,7 @@ const AddNewRepair = () => {
                         onChange={handleChange2}
                         input={<OutlinedInput label="Receiver" />}
                         renderValue={(selected) => selected.join(", ")}
-                        // MenuProps={MenuProps}
+                      // MenuProps={MenuProps}
                       >
                         <MenuItem key="Select All" value="All Emails Selected">
                           <Checkbox
@@ -303,7 +319,7 @@ const AddNewRepair = () => {
                         onChange={handleChange2}
                         input={<OutlinedInput label="Receiver" />}
                         renderValue={(selected) => selected.join(", ")}
-                        // MenuProps={MenuProps}
+                      // MenuProps={MenuProps}
                       >
                         <MenuItem key="Select All" value="All Numbers Selected">
                           <Checkbox
