@@ -13,7 +13,6 @@ const MainLayoutRoot = styled('div')(({ theme }) => ({
 
 export const MainLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   return (
     <MainLayoutRoot>
       <MainNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />

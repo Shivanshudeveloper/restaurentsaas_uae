@@ -17,8 +17,11 @@ import Restaurant from '@mui/icons-material/Restaurant';
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { DatePicker, TimePicker } from "@mui/lab";
+import { useRouter } from 'next/router'
 
 const Waiters = () => {
+
+    const router = useRouter()
 
     let [showWaiterModal, setShowWaiterModal] = useState(false)
 
@@ -369,7 +372,11 @@ const Waiters = () => {
                             flexDirection: "column",
                             alignItems: "center"
                         }}
+                        onClick={() => {
+                            router.push("/waiters")
+                        }}
                     >
+                        {/* Set badge count to the length of the array containing waiter info */}
                         <Badge badgeContent={10} color="error">
                             <Restaurant />
                         </Badge>

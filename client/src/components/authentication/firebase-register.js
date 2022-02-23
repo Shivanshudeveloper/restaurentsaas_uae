@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
+import { useReducer } from 'react';
 import {
   Box,
   Button,
@@ -13,19 +15,82 @@ import {
 } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
+import firebase from '../../lib/firebase';
+
+const reducer = (state, action) => {
+  if (action.type === 'AUTH_STATE_CHANGED') {
+    const { isAuthenticated, user } = action.payload;
+
+    return {
+      ...state,
+      isAuthenticated,
+      isInitialized: true,
+      user
+    };
+  }
+
+  return state;
+};
+
+const initialState = {
+  isAuthenticated: false,
+  isInitialized: false,
+  user: null
+};
 
 export const FirebaseRegister = (props) => {
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  useEffect(() => firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // Here you should extract the complete user profile to make it available in your entire app.
+      // The auth state only provides basic information.
+      dispatch({
+        type: 'AUTH_STATE_CHANGED',
+        payload: {
+          isAuthenticated: true,
+          user: {
+            id: user.uid,
+            avatar: user.photoURL,
+            email: user.email,
+            name: 'Anika Visser',
+            plan: 'Premium'
+          }
+        }
+      });
+    } else {
+      dispatch({
+        type: 'AUTH_STATE_CHANGED',
+        payload: {
+          isAuthenticated: false,
+          user: null
+        }
+      });
+    }
+  }), [dispatch]);
+
+
   const isMounted = useMounted();
   const router = useRouter();
   const { createUserWithEmailAndPassword, signInWithGoogle } = useAuth();
   const formik = useFormik({
     initialValues: {
+      fName: '',
+      lName: '',
       email: '',
       password: '',
       policy: true,
       submit: null
     },
     validationSchema: Yup.object({
+      fName: Yup
+        .string()
+        .max(255)
+        .required('First name is required'),
+      lName: Yup
+        .string()
+        .max(255)
+        .required('First name is required'),
       email: Yup
         .string()
         .email('Must be a valid email')
@@ -42,7 +107,29 @@ export const FirebaseRegister = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await createUserWithEmailAndPassword(values.email, values.password);
+        // await createUserWithEmailAndPassword(values.email, values.password)
+
+        console.log(values)
+        firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+
+            sessionStorage.setItem("userId", user.uid);
+            sessionStorage.setItem("userEmail", user.email);
+
+            firebase.auth().currentUser.updateProfile({
+              displayName: `${values.fName} ${values.lName}`,
+              photoURL: "https://example.com/jane-q-user/profile.jpg"
+            }).then(() => {
+              console.log(`Profile updated!`, firebase.auth().currentUser);
+            }).catch((error) => {
+              console.log(`Profile updated!`, firebase.auth().currentUser);
+            });
+
+          }).catch(err => {
+            console.log(err)
+          });
 
         if (isMounted()) {
           const returnUrl = router.query.returnUrl || '/dashboard';
@@ -62,7 +149,8 @@ export const FirebaseRegister = (props) => {
 
   const handleGoogleClick = async () => {
     try {
-      await signInWithGoogle();
+      const provider = new firebase.auth.GoogleAuthProvider();
+      return firebase.auth().signInWithPopup(provider);
     } catch (err) {
       console.error(err);
     }
@@ -117,6 +205,30 @@ export const FirebaseRegister = (props) => {
         noValidate
         onSubmit={formik.handleSubmit}
       >
+        <TextField
+          error={Boolean(formik.touched.fName && formik.errors.fName)}
+          fullWidth
+          helperText={formik.touched.fName && formik.errors.fName}
+          label="First Name"
+          margin="normal"
+          name="fName"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          type="text"
+          value={formik.values.fName}
+        />
+        <TextField
+          error={Boolean(formik.touched.lName && formik.errors.lName)}
+          fullWidth
+          helperText={formik.touched.lName && formik.errors.lName}
+          label="Last Name"
+          margin="normal"
+          name="lName"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          type="text"
+          value={formik.values.lName}
+        />
         <TextField
           error={Boolean(formik.touched.email && formik.errors.email)}
           fullWidth

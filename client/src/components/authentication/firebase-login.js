@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useAuth } from "../../hooks/use-auth";
 import { useMounted } from "../../hooks/use-mounted";
+import firebase from '../../lib/firebase';
 
 export const FirebaseLogin = (props) => {
   const isMounted = useMounted();
@@ -32,7 +33,19 @@ export const FirebaseLogin = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await signInWithEmailAndPassword(values.email, values.password);
+        // signInWithEmailAndPassword(values.email, values.password)
+
+        console.log(values)
+        firebase.auth().signInWithEmailAndPassword(values.email, values.password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+
+            sessionStorage.setItem("userId", user.uid);
+            sessionStorage.setItem("userEmail", user.email);
+          }).catch(err => {
+            console.log(err)
+          });
 
         if (isMounted()) {
           const returnUrl = router.query.returnUrl || "/dashboard";
@@ -52,7 +65,9 @@ export const FirebaseLogin = (props) => {
 
   const handleGoogleClick = async () => {
     try {
-      await signInWithGoogle();
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      return firebase.auth().signInWithPopup(provider);
     } catch (err) {
       console.error(err);
     }
