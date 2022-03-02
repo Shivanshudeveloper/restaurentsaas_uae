@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useAuth } from '../../hooks/use-auth';
+import firebase from '../../lib/firebase';
 
 export const AuthGuard = (props) => {
   const { children } = props;
@@ -9,20 +10,22 @@ export const AuthGuard = (props) => {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
 
-  useEffect(() => {
-      if (!router.isReady) {
-        return;
-      }
+  var user = firebase.auth().currentUser;
 
-      if (!auth.isAuthenticated) {
-        router.push({
-          pathname: '/authentication/login',
-          query: { returnUrl: router.asPath }
-        });
-      } else {
-        setChecked(true);
-      }
-    },
+  useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+
+    if (!user) {
+      router.push({
+        pathname: '/authentication/login',
+        query: { returnUrl: router.asPath }
+      });
+    } else {
+      setChecked(true);
+    }
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.isReady]);
 
