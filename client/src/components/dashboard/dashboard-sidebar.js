@@ -45,6 +45,7 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import FeedIcon from "@mui/icons-material/Feed";
 import SendIcon from "@mui/icons-material/Send";
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import LoyaltyIcon from '@mui/icons-material/Loyalty';
 
 const getSections = (t) => [
   {
@@ -138,6 +139,11 @@ const getSections = (t) => [
         title: t("Manage QR Codes"),
         path: "/dashboard/manageQR",
         icon: <QrCode2Icon fontSize="small" />,
+      },
+      {
+        title: t("Coupons"),
+        path: "/dashboard/coupons",
+        icon: <LoyaltyIcon fontSize="small" />,
       },
       {
         title: t("Customers"),
