@@ -118,6 +118,9 @@ export const FirebaseRegister = (props) => {
             sessionStorage.setItem("userId", user.uid);
             sessionStorage.setItem("userEmail", user.email);
 
+            const returnUrl = router.query.returnUrl || "/dashboard";
+            router.push(returnUrl);
+
             firebase.auth().currentUser.updateProfile({
               displayName: `${values.fName} ${values.lName}`,
               photoURL: "https://example.com/jane-q-user/profile.jpg"
@@ -131,10 +134,10 @@ export const FirebaseRegister = (props) => {
             console.log(err)
           });
 
-        if (isMounted()) {
-          const returnUrl = router.query.returnUrl || '/dashboard';
-          router.push(returnUrl);
-        }
+        // if (isMounted()) {
+        //   const returnUrl = router.query.returnUrl || '/dashboard';
+        //   router.push(returnUrl);
+        // }
       } catch (err) {
         console.error(err);
 

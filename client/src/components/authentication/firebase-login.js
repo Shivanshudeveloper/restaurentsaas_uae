@@ -35,11 +35,13 @@ export const FirebaseLogin = (props) => {
       try {
         // signInWithEmailAndPassword(values.email, values.password)
 
-        console.log(values)
         firebase.auth().signInWithEmailAndPassword(values.email, values.password)
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
+
+            const returnUrl = router.query.returnUrl || "/dashboard";
+            router.push(returnUrl);
 
             sessionStorage.setItem("userId", user.uid);
             sessionStorage.setItem("userEmail", user.email);
@@ -47,10 +49,10 @@ export const FirebaseLogin = (props) => {
             console.log(err)
           });
 
-        if (isMounted()) {
-          const returnUrl = router.query.returnUrl || "/dashboard";
-          router.push(returnUrl);
-        }
+        // if (isMounted()) {
+        //   returnUrl = router.query.returnUrl || "/dashboard";
+        //   router.push(returnUrl);
+        // }
       } catch (err) {
         console.error(err);
 

@@ -45,7 +45,7 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import FeedIcon from "@mui/icons-material/Feed";
 import SendIcon from "@mui/icons-material/Send";
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import LoyaltyIcon from '@mui/icons-material/Loyalty';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 
 const getSections = (t) => [
   {
@@ -136,14 +136,14 @@ const getSections = (t) => [
         ],
       },
       {
+        title: t("Manage POS"),
+        path: "/dashboard/managePOS",
+        icon: <CreditScoreIcon fontSize="small" />,
+      },
+      {
         title: t("Manage QR Codes"),
         path: "/dashboard/manageQR",
         icon: <QrCode2Icon fontSize="small" />,
-      },
-      {
-        title: t("Coupons"),
-        path: "/dashboard/coupons",
-        icon: <LoyaltyIcon fontSize="small" />,
       },
       {
         title: t("Customers"),
@@ -232,6 +232,10 @@ const getSections = (t) => [
           {
             title: t("Add Feedback"),
             path: "/dashboard/forms/feedback",
+          },
+          {
+            title: t("Feedback Setting"),
+            path: "/dashboard/feedbacksetting",
           },
         ],
       },

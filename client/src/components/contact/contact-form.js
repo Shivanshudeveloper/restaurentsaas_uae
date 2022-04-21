@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Button,
@@ -9,23 +10,120 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 import { typography } from "@mui/system";
 
-export const ContactForm = () => {
+import RadioGroupRating from "../RadioGroupRating";
+
+export const ContactForm = ({ name }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
 
+  const [rating, setrating] = React.useState(5);
+
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    window.location.href = "/dashboard/forms";
+  };
+
+
+  const submitReview = () => {
+    if (Number(rating) >= 4) {
+      var url = "https://www.google.com/search?q=sortwind&authuser=5&sxsrf=APq-WBsPsHyxn5mX312u4SpceRRHk6Jryg%3A1649227770997&source=hp&ei=-jdNYrTjOo2RoAT52ITYCA&iflsig=AHkkrS4AAAAAYk1GCgNejfiwEDVNnxhoh7r8xiR62smO&ved=0ahUKEwi0yMSb7P72AhWNCIgKHXksAYsQ4dUDCAc&uact=5&oq=sortwind&gs_lcp=Cgdnd3Mtd2l6EAMyBwgAEIAEEAoyBAgAEAoyBAgAEAoyBAgAEAoyBAgAEAoyBAgAEAoyBAgAEAoyBAgAEAoyBAgAEAoyBAgAEAo6BQgAEIAEOgsIABCABBCxAxCDAToLCC4QgAQQsQMQgwE6EQguEIAEELEDEIMBEMcBENEDOggIABCABBCxAzoICC4QgAQQsQM6CwguEIAEELEDENQCOgUIABCxA1AAWKEbYIYkaABwAHgAgAGnAogBjwySAQUwLjMuNZgBAKABAQ&sclient=gws-wiz#lrd=0x390cf1df3afea123:0xb35952ca94482152,3,,,"
+      window.open(url, '_blank').focus();
+    } else {
+      handleClickOpen();
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
+    <>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth='sm'
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <center>
+            {/* <img style={{ width: '350px', marginBottom: '2px' }} src="/survey.png" /> */}
+            <Typography sx={{ mb: 4 }} variant="h5">
+              Thank you for your feedback!
+            </Typography>
+          </center>
           <Typography sx={{ mb: 1 }} variant="subtitle2">
-            First Name *
+            Message
           </Typography>
-          <TextField fullWidth name="name" required />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+          <TextField fullWidth name="message" required multiline rows={6} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+    <form onSubmit={handleSubmit}>
+      <center>
+        <img alt="Logo" style={{ width: '100px', marginBottom: '10px' }} src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" />
+        
+
+        {
+          rating === 5 ? (
+            <Typography sx={{ mt: 5 }} variant="h6">
+              We like you too!
+            </Typography>
+          ) : rating === 4 ? (
+            <Typography sx={{ mt: 5 }} variant="h6">
+              Good
+            </Typography>
+          ): rating === 3 ? (
+            <Typography sx={{ mt: 5 }} variant="h6">
+              Average
+            </Typography>
+          ): rating === 2 ? (
+            <Typography sx={{ mt: 5 }} variant="h6">
+              Bad
+            </Typography>
+          ): rating === 1 ? (
+            <Typography sx={{ mt: 5 }} variant="h6">
+              Terrible!!!
+            </Typography>
+          ) : null
+        }
+        <Typography sx={{ mb: 1, color: 'gray' }} variant="subtitle2">
+          We really need your feedback to improve
+        </Typography>
+      </center>
+
+
+      <center>
+        <RadioGroupRating 
+          rating ={rating}
+          setrating={setrating}
+        />
+      </center>
+
+
+      <Grid container spacing={3}>
+        {/* <Grid item xs={12} sm={12}>
+          <Typography sx={{ mb: 1 }} variant="subtitle2">
+            Full Name *
+          </Typography>
+          <TextField value={name} fullWidth name="name" required />
+        </Grid> */}
+        {/* <Grid item xs={12} sm={6}>
           <Typography sx={{ mb: 1 }} variant="subtitle2">
             Last Name*
           </Typography>
@@ -42,7 +140,7 @@ export const ContactForm = () => {
             Phone Number *
           </Typography>
           <TextField fullWidth name="phone" required type="tel" />
-        </Grid>
+        </Grid> */}
         {/* <Grid item xs={12} sm={6}>
           <Typography sx={{ mb: 1 }} variant="subtitle2">
             Company Size
@@ -71,24 +169,8 @@ export const ContactForm = () => {
             <MenuItem value={50000}>$50,000+</MenuItem>
           </Select>
         </Grid> */}
-        <Grid item xs={12}>
-          <Typography sx={{ mb: 1 }} variant="subtitle2">
-            Message
-          </Typography>
-          <TextField fullWidth name="message" required multiline rows={6} />
-        </Grid>
       </Grid>
-      <Box
-        sx={{
-          mt: 2,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Typography variant="subtitle2">Please give us a Rating: </Typography>
-        <Rating name="half-rating" precision={0.5} />
-      </Box>
+      
 
       <Box
         sx={{
@@ -97,31 +179,21 @@ export const ContactForm = () => {
           mt: 3,
         }}
       >
-        <Button fullWidth size="large" variant="contained">
-          Submit Feedback
+        <Button onClick={submitReview} sx={{ mt: 5, width: '450px' }} variant="contained">
+          {
+            Number(rating) >= 4 ? (
+              <>
+                Rate us on Google
+              </>
+            ) : (
+              <>
+                Comment
+              </>
+            )
+          }
         </Button>
       </Box>
-      <Typography color="textSecondary" sx={{ mt: 3 }} variant="body2">
-        By submitting this, you agree to the{" "}
-        <Link
-          color="textPrimary"
-          href="#"
-          underline="always"
-          variant="subtitle2"
-        >
-          Privacy Policy
-        </Link>{" "}
-        and{" "}
-        <Link
-          color="textPrimary"
-          href="#"
-          underline="always"
-          variant="subtitle2"
-        >
-          Cookie Policy
-        </Link>
-        .
-      </Typography>
     </form>
+    </>
   );
 };
