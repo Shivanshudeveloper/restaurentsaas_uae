@@ -9,7 +9,7 @@ const withTM = require('next-transpile-modules')([
 ]);
 
 module.exports = withTM({
-  reactStrictMode: true,
+  reactStrictMode: false,
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,

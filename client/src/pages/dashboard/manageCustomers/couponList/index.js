@@ -7,7 +7,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  Transition,
   MenuItem,
   Stack,
   Table,
@@ -227,7 +226,7 @@ const CouponsList = () => {
           py: 8,
         }}
       >
-        <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} TransitionComponent={Transition}>
+        <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} >
           <Box sx={{ py: 5, px: 3 }}>
             <Grid container direction="column" rowSpacing={2}>
               <Grid item container justifyContent="center">

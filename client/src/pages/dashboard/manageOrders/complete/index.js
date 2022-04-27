@@ -14,7 +14,6 @@ import {
   TextField,
   Typography,
   Dialog,
-  Transition,
   InputLabel,
   Stack,
   Select
@@ -501,7 +500,7 @@ const CompleteList = () => {
 
   return (
     <>
-      <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} TransitionComponent={Transition}>
+      <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} >
         <Box sx={{ width: "100%" }}>
           <Container sx={{ mt: 4, mb: 4 }} maxWidth="sm">
             <Typography sx={{ mt: 1 }} variant="h5">

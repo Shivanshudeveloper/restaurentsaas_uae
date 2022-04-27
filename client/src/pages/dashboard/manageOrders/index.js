@@ -22,7 +22,6 @@ import {
   TableRow,
   TextField,
   Typography,
-  Transition,
   Dialog,
   Stack
 } from "@mui/material";
@@ -674,7 +673,7 @@ const OrdersList = () => {
       />
 
       {/* Dialog for editing and adding orders */}
-      <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} TransitionComponent={Transition}>
+      <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} >
         <Box sx={{ width: "100%" }}>
           <Container sx={{ mt: 4, mb: 4 }} maxWidth="sm">
             <Typography sx={{ mt: 1 }} variant="h5">
@@ -932,7 +931,7 @@ const OrdersList = () => {
         </Box>
       </Dialog>
 
-      <Dialog maxWidth="lg" open={openDialog} onClose={handleCloseDialog} TransitionComponent={Transition}>
+      <Dialog maxWidth="lg" open={openDialog} onClose={handleCloseDialog} >
         <Box sx={{ width: "100%" }}>
           <Container sx={{ mt: 4, mb: 4 }} maxWidth="sm">
             <Typography sx={{ mt: 1 }} variant="h5">

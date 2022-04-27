@@ -15,7 +15,6 @@ import {
   TextField,
   Typography,
   Dialog,
-  Transition,
   Select,
   InputLabel,
   Snackbar
@@ -218,7 +217,7 @@ const CustomersList = () => {
         action={action}
       />
 
-      <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} TransitionComponent={Transition}>
+      <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} >
         <Box sx={{ width: "100%" }}>
           <Container sx={{ mt: 4, mb: 4 }} maxWidth="sm">
             <Typography sx={{ mt: 1, mb: 0.5 }} variant="h5">
@@ -324,7 +323,7 @@ const CustomersList = () => {
         </Box>
       </Dialog>
 
-      <Dialog maxWidth="lg" open={openDialog} onClose={handleCloseDialog} TransitionComponent={Transition}>
+      <Dialog maxWidth="lg" open={openDialog} onClose={handleCloseDialog} >
         <Box sx={{ width: "100%" }}>
           <Container sx={{ mt: 4, mb: 4 }} maxWidth="sm">
             <Typography sx={{ mt: 1, mb: 0.5 }} variant="h5">
