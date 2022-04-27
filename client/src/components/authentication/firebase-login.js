@@ -20,8 +20,8 @@ export const FirebaseLogin = (props) => {
   const { signInWithEmailAndPassword, signInWithGoogle } = useAuth();
   const formik = useFormik({
     initialValues: {
-      email: "demo@devias.io",
-      password: "Password123!",
+      email: "",
+      password: "",
       submit: null,
     },
     validationSchema: Yup.object({
@@ -77,7 +77,7 @@ export const FirebaseLogin = (props) => {
 
   return (
     <div {...props}>
-      <Button
+      {/* <Button
         fullWidth
         onClick={handleGoogleClick}
         size="large"
@@ -98,7 +98,7 @@ export const FirebaseLogin = (props) => {
           sx={{ mr: 1 }}
         />
         Google
-      </Button>
+      </Button> */}
       <Box
         sx={{
           alignItems: "center",

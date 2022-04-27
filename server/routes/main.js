@@ -8,6 +8,8 @@ const CustomerDetails = require("../models/CustomerDetails")
 const Coupon = require("../models/Coupon")
 const QRCode = require("../models/QRCode")
 const Reservation = require("../models/Reservation")
+const Category = require("../models/Category")
+const Menu = require("../models/Menu")
 
 // Add a new Reservation
 router.post("/add_reservation", (req, res) => {
@@ -404,6 +406,82 @@ router.patch("/edit_order/:orderId/:userId", async (req, res) => {
 router.get("/test", (req, res) => {
   res.send("Working");
 });
+
+
+
+// Database CRUD Operations
+// @POST Request to add item in cart
+// POST
+router.post("/addcategorydata", (req, res) => {
+  const {
+    categoryname,
+    userEmail,
+    userId
+  } = req.body;
+
+  const addCategory = new Category({
+    categoryname,
+    userEmail,
+    userId
+  });
+  addCategory
+    .save()
+    .then((data) => {
+      res.status(200).json("Added");
+    })
+    .catch((err) => console.log(err));
+});
+
+
+
+router.get("/getcategorydata", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  Category.find({})
+    .sort({ date: -1 })
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => res.status(400).json(`Error: ${err}`));
+});
+
+// Database CRUD Operations
+// @POST Request to add item in cart
+// POST
+router.post("/addmenuitemdata", (req, res) => {
+  const {
+    itemname,
+    categoryname,
+    price,
+    stock,
+    userId
+  } = req.body;
+
+  const addMenu = new Menu({
+    itemname,
+    categoryname,
+    price,
+    stock,
+    userId
+  });
+  addMenu
+    .save()
+    .then((data) => {
+      res.status(200).json("Added");
+    })
+    .catch((err) => console.log(err));
+});
+
+
+router.get("/getallitemdata", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  Menu.find({})
+    .sort({ date: -1 })
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => res.status(400).json(`Error: ${err}`));
+});
+
 
 
 module.exports = router;

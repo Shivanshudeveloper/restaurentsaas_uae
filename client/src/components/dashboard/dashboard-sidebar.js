@@ -135,65 +135,80 @@ const getSections = (t) => [
           },
         ],
       },
-      {
-        title: t("Manage POS"),
-        path: "/dashboard/managePOS",
-        icon: <CreditScoreIcon fontSize="small" />,
-      },
+      // {
+      //   title: t("Manage POS"),
+      //   path: "/dashboard/managePOS",
+      //   icon: <CreditScoreIcon fontSize="small" />,
+      // },
       {
         title: t("Manage QR Codes"),
         path: "/dashboard/manageQR",
         icon: <QrCode2Icon fontSize="small" />,
       },
+      // {
+      //   title: t("Customers"),
+      //   path: "/dashboard/customers",
+      //   icon: <AssignmentIndIcon fontSize="small" />,
+      //   children: [
+      //     {
+      //       title: t("List"),
+      //       path: "/dashboard/customers",
+      //     },
+      //     {
+      //       title: t("Details"),
+      //       path: "/dashboard/customers/1",
+      //     },
+      //     {
+      //       title: t("Edit"),
+      //       path: "/dashboard/customers/1/edit",
+      //     },
+      //   ],
+      // },
+      // {
+      //   title: t("Products"),
+      //   path: "/dashboard/products",
+      //   icon: <ShoppingBagIcon fontSize="small" />,
+      //   children: [
+      //     {
+      //       title: t("List"),
+      //       path: "/dashboard/products",
+      //     },
+      //     {
+      //       title: t("Create"),
+      //       path: "/dashboard/products/new",
+      //     },
+      //   ],
+      // },
       {
-        title: t("Customers"),
-        path: "/dashboard/customers",
-        icon: <AssignmentIndIcon fontSize="small" />,
-        children: [
-          {
-            title: t("List"),
-            path: "/dashboard/customers",
-          },
-          {
-            title: t("Details"),
-            path: "/dashboard/customers/1",
-          },
-          {
-            title: t("Edit"),
-            path: "/dashboard/customers/1/edit",
-          },
-        ],
-      },
-      {
-        title: t("Products"),
-        path: "/dashboard/products",
+        title: t("Menu"),
+        path: "/dashboard/menu",
         icon: <ShoppingBagIcon fontSize="small" />,
         children: [
           {
-            title: t("List"),
-            path: "/dashboard/products",
+            title: t("Menu List"),
+            path: "/dashboard/menu",
           },
           {
-            title: t("Create"),
-            path: "/dashboard/products/new",
+            title: t("Category"),
+            path: "/dashboard/menu/category",
           },
         ],
       },
-      {
-        title: t("Orders"),
-        icon: <ShoppingCartIcon fontSize="small" />,
-        path: "/dashboard/orders",
-        children: [
-          {
-            title: t("List"),
-            path: "/dashboard/orders",
-          },
-          {
-            title: t("Details"),
-            path: "/dashboard/orders/1",
-          },
-        ],
-      },
+      // {
+      //   title: t("Orders"),
+      //   icon: <ShoppingCartIcon fontSize="small" />,
+      //   path: "/dashboard/orders",
+      //   children: [
+      //     {
+      //       title: t("List"),
+      //       path: "/dashboard/orders",
+      //     },
+      //     {
+      //       title: t("Details"),
+      //       path: "/dashboard/orders/1",
+      //     },
+      //   ],
+      // },
       {
         title: t("Invoices"),
         path: "/dashboard/invoices",
