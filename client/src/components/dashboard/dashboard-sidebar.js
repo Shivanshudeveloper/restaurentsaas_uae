@@ -56,16 +56,16 @@ const getSections = (t) => [
         path: "/dashboard",
         icon: <HomeIcon fontSize="small" />,
       },
-      {
-        title: t("Analytics"),
-        path: "/dashboard/analytics",
-        icon: <ChartBarIcon fontSize="small" />,
-      },
-      {
-        title: t("Finance"),
-        path: "/dashboard/finance",
-        icon: <ChartPieIcon fontSize="small" />,
-      },
+      // {
+      //   title: t("Analytics"),
+      //   path: "/dashboard/analytics",
+      //   icon: <ChartBarIcon fontSize="small" />,
+      // },
+      //  {
+      //   title: t("Finance"),
+      //   path: "/dashboard/finance",
+      //   icon: <ChartPieIcon fontSize="small" />,
+      // },
       // {
       //   title: t("Logistics"),
       //   path: "/dashboard/logistics",
@@ -87,11 +87,11 @@ const getSections = (t) => [
       //     />
       //   ),
       // },
-      {
-        title: t("Account"),
-        path: "/dashboard/account",
-        icon: <UserCircleIcon fontSize="small" />,
-      },
+      // {
+      //   title: t("Account"),
+      //   path: "/dashboard/account",
+      //   icon: <UserCircleIcon fontSize="small" />,
+      // },
     ],
   },
   {

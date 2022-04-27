@@ -21,6 +21,11 @@ import { gtm } from '../../lib/gtm';
 import { getEvents, updateEvent } from '../../slices/calendar';
 import { useDispatch, useSelector } from '../../store';
 
+
+
+import axios from "axios";
+import { API_SERVICE } from "../../config";
+
 const FullCalendarWrapper = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(3),
   '& .fc-license-message': {
@@ -213,23 +218,35 @@ const Calendar = () => {
     });
   };
 
+  let userId = "ndtWdXjvLLa46ILxtwH2J8zbx013";
+  let [reservations, setReservations] = useState([]);
+  
+  useEffect(() => {  
+    axios
+      .get(`${API_SERVICE}/get_reservations/${userId}`)
+      .then((res) => {
+        // console.log(res.data, userId);
+        setReservations(res.data.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+ 
   const selectedEvent = dialog.eventId && events.find((event) => event.id === dialog.eventId);
 
   return (
     <>
       <Head>
-        <title>
-          Dashboard: Calendar | Material Kit Pro
-        </title>
+        <title>Dashboard: Calendar | Material Kit Pro</title>
       </Head>
       <Box
         component="main"
         sx={{
-          backgroundColor: 'background.paper',
+          backgroundColor: "background.paper",
           flexGrow: 1,
-          py: 8
-        }}
-      >
+          py: 8,
+        }}>
         <CalendarToolbar
           date={date}
           onAddClick={handleAddClick}
@@ -251,7 +268,12 @@ const Calendar = () => {
             eventDrop={handleEventDrop}
             eventResizableFromStart
             eventResize={handleEventResize}
-            events={events}
+            events={reservations.map((item, index) => {
+              return {
+                title: item.name,
+                date: item.date.substring(0, item.date.indexOf("T")),
+              };
+            })}
             headerToolbar={false}
             height={800}
             initialDate={date}
@@ -261,7 +283,7 @@ const Calendar = () => {
               interactionPlugin,
               listPlugin,
               timeGridPlugin,
-              timelinePlugin
+              timelinePlugin,
             ]}
             ref={calendarRef}
             rerenderDelay={10}
