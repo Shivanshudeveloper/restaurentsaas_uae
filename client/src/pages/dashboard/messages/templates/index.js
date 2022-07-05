@@ -223,7 +223,7 @@ const Templates = () => {
             rows={1}
             sx={{ marginBottom: "1rem" }}
             name="title"
-            value={messageToEdit.title}
+            value={messageToEdit?.title}
             onChange={(e) => {
               let { name, value } = e.target;
 
@@ -242,7 +242,7 @@ const Templates = () => {
             rows={1}
             sx={{ marginBottom: "1rem" }}
             name="subject"
-            value={messageToEdit.subject}
+            value={messageToEdit?.subject}
             onChange={(e) => {
               let { name, value } = e.target;
 
@@ -261,7 +261,7 @@ const Templates = () => {
             rows={6}
             sx={{ marginBottom: "1rem" }}
             name="body"
-            value={messageToEdit.body}
+            value={messageToEdit?.body}
             onChange={(e) => {
               let { name, value } = e.target;
               console.log(name, value);
