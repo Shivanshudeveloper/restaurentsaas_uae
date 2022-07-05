@@ -23,19 +23,19 @@ import {
   TextField,
   Typography,
   Dialog,
-  Stack
+  Stack,
 } from "@mui/material";
 import { AuthGuard } from "../../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../../components/dashboard/dashboard-layout";
-import axios from "axios"
-import { API_SERVICE } from "../../../config"
+import axios from "axios";
+import { API_SERVICE } from "../../../config";
 import useSessionStorage from "../../../hooks/useSessionStorage";
 
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { DatePicker } from "@mui/lab";
-import Snackbar from '@mui/material/Snackbar';
-import CloseIcon from '@mui/icons-material/Close';
+import Snackbar from "@mui/material/Snackbar";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { ArrowRight as ArrowRightIcon } from "../../../icons/arrow-right";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -44,9 +44,15 @@ import { Add, BarChart, Delete, Edit } from "@mui/icons-material";
 import Link from "next/link";
 
 import { useFormik } from "formik";
-import * as Yup from "yup"
+import * as Yup from "yup";
 
-const DineInTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDate }) => {
+const DineInTable = ({
+  deleteOrder,
+  userId,
+  toggler,
+  openEditor,
+  getFormattedDate,
+}) => {
   const columns = [
     { label: "Sl", minWidth: 10, maxWidth: 30 },
     { label: "Inv No.", minWidth: 50, maxWidth: 100 },
@@ -133,20 +139,22 @@ const DineInTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
     ),
   ];
 
-  let [filteredOrders, setFilteredOrders] = useState([])
+  let [filteredOrders, setFilteredOrders] = useState([]);
 
   useEffect(() => {
-    if (!userId)
-      return
+    if (!userId) return;
 
-    axios.get(`${API_SERVICE}/get_orders_by_type/${userId}/${1}`)
+    axios
+      .get(`${API_SERVICE}/get_orders_by_type/${userId}/${1}`)
       .then((res) => {
-        console.log(res.data)
-        setFilteredOrders(res.data.reverse())
+        console.log(res);
+        setFilteredOrders(res.data.reverse());
       })
-      .catch(err => { console.log(err) })
-
-  }, [userId, toggler])
+      .then()
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userId, toggler]);
 
   return (
     <>
@@ -161,7 +169,7 @@ const DineInTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
           </TableHead>
           <TableBody>
             {filteredOrders.map((order, id) => (
-              <TableRow hover key={order._id} >
+              <TableRow hover key={order._id}>
                 <TableCell align="center">{id + 1}</TableCell>
                 <TableCell align="center">{order.invoiceNumber}</TableCell>
                 <TableCell align="center">{order.name}</TableCell>
@@ -169,17 +177,34 @@ const DineInTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
                 <TableCell align="center">{order.phone}</TableCell>
                 <TableCell align="center">{order.waiter}</TableCell>
                 <TableCell align="center">{order.table}</TableCell>
-                <TableCell align="center">{order.status == 1 ? "Pending" : order.status == 2 ? "Completed" : "Canceled"}</TableCell>
-                <TableCell align="center">{getFormattedDate(order.orderDate)}</TableCell>
+                <TableCell align="center">
+                  {order.status == 1
+                    ? "Pending"
+                    : order.status == 2
+                    ? "Completed"
+                    : "Canceled"}
+                </TableCell>
+                <TableCell align="center">
+                  {getFormattedDate(order.orderDate)}
+                </TableCell>
                 <TableCell align="center">{order.amount}</TableCell>
                 <TableCell align="center">
-                  <IconButton size="small" color="primary" onClick={() => { openEditor(order._id) }}>
+                  <IconButton
+                    size="small"
+                    color="primary"
+                    onClick={() => {
+                      openEditor(order._id);
+                    }}
+                  >
                     <Edit />
                   </IconButton>
-                  <IconButton size="small" sx={{ color: "error.main" }}
+                  <IconButton
+                    size="small"
+                    sx={{ color: "error.main" }}
                     onClick={() => {
-                      deleteOrder(order._id)
-                    }}>
+                      deleteOrder(order._id);
+                    }}
+                  >
                     <Delete />
                   </IconButton>
                   <IconButton size="small">
@@ -187,9 +212,7 @@ const DineInTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
                   </IconButton>
                 </TableCell>
               </TableRow>
-            )
-            )
-            }
+            ))}
           </TableBody>
         </Table>
       </Grid>
@@ -198,7 +221,13 @@ const DineInTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
 };
 
 // -----------------------------------------
-const DeliveryTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDate }) => {
+const DeliveryTable = ({
+  deleteOrder,
+  userId,
+  toggler,
+  openEditor,
+  getFormattedDate,
+}) => {
   const columns = [
     { label: "Sl", minWidth: 10, maxWidth: 30 },
     { label: "Invoice No.", minWidth: 50, maxWidth: 100 },
@@ -249,20 +278,21 @@ const DeliveryTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedD
     ),
   ];
 
-  let [filteredOrders, setFilteredOrders] = useState([])
+  let [filteredOrders, setFilteredOrders] = useState([]);
 
   useEffect(() => {
-    if (!userId)
-      return
+    if (!userId) return;
 
-    axios.get(`${API_SERVICE}/get_orders_by_type/${userId}/${2}`)
+    axios
+      .get(`${API_SERVICE}/get_orders_by_type/${userId}/${2}`)
       .then((res) => {
-        console.log(res.data)
-        setFilteredOrders(res.data.reverse())
+        console.log(res.data);
+        setFilteredOrders(res.data.reverse());
       })
-      .catch(err => { console.log(err) })
-
-  }, [userId, toggler])
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userId, toggler]);
 
   return (
     <>
@@ -277,24 +307,41 @@ const DeliveryTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedD
           </TableHead>
           <TableBody>
             {filteredOrders.map((order, id) => (
-              <TableRow hover key={order._id} >
+              <TableRow hover key={order._id}>
                 <TableCell align="center">{id + 1}</TableCell>
                 <TableCell align="center">{order.invoiceNumber}</TableCell>
                 <TableCell align="center">{order.name}</TableCell>
                 <TableCell align="center">{order.email}</TableCell>
                 <TableCell align="center">{order.phone}</TableCell>
                 <TableCell align="center">{order.from}</TableCell>
-                <TableCell align="center">{order.status == 1 ? "Pending" : order.status == 2 ? "Completed" : "Canceled"}</TableCell>
-                <TableCell align="center">{getFormattedDate(order.orderDate)}</TableCell>
+                <TableCell align="center">
+                  {order.status == 1
+                    ? "Pending"
+                    : order.status == 2
+                    ? "Completed"
+                    : "Canceled"}
+                </TableCell>
+                <TableCell align="center">
+                  {getFormattedDate(order.orderDate)}
+                </TableCell>
                 <TableCell align="center">{order.amount}</TableCell>
                 <TableCell align="center">
-                  <IconButton size="small" color="primary" onClick={() => { openEditor(order._id) }}>
+                  <IconButton
+                    size="small"
+                    color="primary"
+                    onClick={() => {
+                      openEditor(order._id);
+                    }}
+                  >
                     <Edit />
                   </IconButton>
-                  <IconButton size="small" sx={{ color: "error.main" }}
+                  <IconButton
+                    size="small"
+                    sx={{ color: "error.main" }}
                     onClick={() => {
-                      deleteOrder(order._id)
-                    }}>
+                      deleteOrder(order._id);
+                    }}
+                  >
                     <Delete />
                   </IconButton>
                   <IconButton size="small">
@@ -302,9 +349,7 @@ const DeliveryTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedD
                   </IconButton>
                 </TableCell>
               </TableRow>
-            )
-            )
-            }
+            ))}
           </TableBody>
         </Table>
       </Grid>
@@ -314,7 +359,13 @@ const DeliveryTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedD
 
 // ---------------------------
 // ---------------------------
-const PickupTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDate }) => {
+const PickupTable = ({
+  deleteOrder,
+  userId,
+  toggler,
+  openEditor,
+  getFormattedDate,
+}) => {
   const columns = [
     { label: "Sl", minWidth: 10, maxWidth: 30 },
     { label: "Invoice No.", minWidth: 50, maxWidth: 100 },
@@ -365,20 +416,21 @@ const PickupTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
     ),
   ];
 
-  let [filteredOrders, setFilteredOrders] = useState([])
+  let [filteredOrders, setFilteredOrders] = useState([]);
 
   useEffect(() => {
-    if (!userId)
-      return
+    if (!userId) return;
 
-    axios.get(`${API_SERVICE}/get_orders_by_type/${userId}/${3}`)
+    axios
+      .get(`${API_SERVICE}/get_orders_by_type/${userId}/${3}`)
       .then((res) => {
-        console.log(res.data)
-        setFilteredOrders(res.data.reverse())
+        console.log(res.data);
+        setFilteredOrders(res.data.reverse());
       })
-      .catch(err => { console.log(err) })
-
-  }, [userId, toggler])
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userId, toggler]);
 
   return (
     <>
@@ -393,24 +445,41 @@ const PickupTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
           </TableHead>
           <TableBody>
             {filteredOrders.map((order, id) => (
-              <TableRow hover key={order._id} >
+              <TableRow hover key={order._id}>
                 <TableCell align="center">{id + 1}</TableCell>
                 <TableCell align="center">{order.invoiceNumber}</TableCell>
                 <TableCell align="center">{order.name}</TableCell>
                 <TableCell align="center">{order.email}</TableCell>
                 <TableCell align="center">{order.phone}</TableCell>
                 <TableCell align="center">{order.from}</TableCell>
-                <TableCell align="center">{order.status == 1 ? "Pending" : order.status == 2 ? "Completed" : "Canceled"}</TableCell>
-                <TableCell align="center">{getFormattedDate(order.orderDate)}</TableCell>
+                <TableCell align="center">
+                  {order.status == 1
+                    ? "Pending"
+                    : order.status == 2
+                    ? "Completed"
+                    : "Canceled"}
+                </TableCell>
+                <TableCell align="center">
+                  {getFormattedDate(order.orderDate)}
+                </TableCell>
                 <TableCell align="center">{order.amount}</TableCell>
                 <TableCell align="center">
-                  <IconButton size="small" color="primary" onClick={() => { openEditor(order._id) }}>
+                  <IconButton
+                    size="small"
+                    color="primary"
+                    onClick={() => {
+                      openEditor(order._id);
+                    }}
+                  >
                     <Edit />
                   </IconButton>
-                  <IconButton size="small" sx={{ color: "error.main" }}
+                  <IconButton
+                    size="small"
+                    sx={{ color: "error.main" }}
                     onClick={() => {
-                      deleteOrder(order._id)
-                    }}>
+                      deleteOrder(order._id);
+                    }}
+                  >
                     <Delete />
                   </IconButton>
                   <IconButton size="small">
@@ -418,9 +487,7 @@ const PickupTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
                   </IconButton>
                 </TableCell>
               </TableRow>
-            )
-            )
-            }
+            ))}
           </TableBody>
         </Table>
       </Grid>
@@ -429,9 +496,8 @@ const PickupTable = ({ deleteOrder, userId, toggler, openEditor, getFormattedDat
 };
 
 const OrdersList = () => {
-
-  const userId = useSessionStorage('userId')
-  let [toggler, setToggler] = useState(false)
+  const userId = useSessionStorage("userId");
+  let [toggler, setToggler] = useState(false);
 
   const [type, setType] = useState(0);
   const handleChange = (event) => {
@@ -439,15 +505,16 @@ const OrdersList = () => {
   };
 
   // State
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-  let [orderDate, setOrderDate] = useState(new Date())
+  let [orderDate, setOrderDate] = useState(new Date());
 
   // 1 : Dine in
   // 2 : Delivery
   // 3 : Pickup
-  let [orderType, setOrderType] = useState(1)
-  let [orderStatus, setOrderStatus] = useState(1)
+  let [orderType, setOrderType] = useState(1);
+  let [orderStatus, setOrderStatus] = useState(1);
 
   const formik = useFormik({
     initialValues: {
@@ -466,55 +533,61 @@ const OrdersList = () => {
 
       status: 1,
       orderDate: new Date(),
-      amount: ""
+      amount: "",
     },
     validationSchema: Yup.object({
-      type: Yup.number().required('Required'),
-      email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+      type: Yup.number().required("Required"),
+      email: Yup.string()
+        .email("Must be a valid email")
+        .max(255)
+        .required("Email is required"),
       invoiceNumber: Yup.string().required("Required").max(255),
       name: Yup.string().required("Required").max(255),
-      phone: Yup.string().required("Required").max(255).matches(phoneRegExp, 'Phone number is not valid'),
+      phone: Yup.string()
+        .required("Required")
+        .max(255)
+        .matches(phoneRegExp, "Phone number is not valid"),
 
-      waiter: Yup.string().when('type', {
+      waiter: Yup.string().when("type", {
         is: 1,
-        then: Yup.string().required('Required').max(255)
+        then: Yup.string().required("Required").max(255),
       }),
-      table: Yup.string().when('type', {
+      table: Yup.string().when("type", {
         is: 1,
-        then: Yup.string().required('Required').max(255)
+        then: Yup.string().required("Required").max(255),
       }),
 
-      from: Yup.string().when('type', {
+      from: Yup.string().when("type", {
         is: (type) => type === 2 || type === 3,
-        then: Yup.string().required('Required').max(255)
+        then: Yup.string().required("Required").max(255),
       }),
 
       status: Yup.number().required("Required").max(255),
       orderDate: Yup.string().required("Required").max(255),
-      amount: Yup.string().required("Required").max(255)
+      amount: Yup.string().required("Required").max(255),
     }),
     onSubmit: (values) => {
-      if (!userId)
-        return
+      if (!userId) return;
 
-      console.log(values)
+      console.log(values);
 
-      axios.post(`${API_SERVICE}/add_order`, { ...values, userId })
-        .then(res => {
-          console.log(res.data)
-          handleCloseDialog()
+      axios
+        .post(`${API_SERVICE}/add_order`, { ...values, userId })
+        .then((res) => {
+          console.log(res.data);
+          handleCloseDialog();
 
           // Reset state
-          formik.handleReset()
-          setOrderDate(new Date())
-          setOrderType(1)
+          formik.handleReset();
+          setOrderDate(new Date());
+          setOrderType(1);
 
-          setToggler(!toggler)
+          setToggler(!toggler);
         })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   });
 
   // Fetch all the orders based on userId
@@ -533,27 +606,28 @@ const OrdersList = () => {
 
   // }, [userId, toggler])
 
-  let [openDialog, setOpenDialog] = useState(false)
+  let [openDialog, setOpenDialog] = useState(false);
 
   function handleCloseDialog() {
-    setOpenDialog(false)
+    setOpenDialog(false);
   }
 
   // Delete an order
   function deleteOrder(orderId) {
-    axios.delete(`${API_SERVICE}/delete_order/${orderId}/${userId}`)
-      .then(res => {
-        console.log(res.data)
-        setToggler(!toggler)
+    axios
+      .delete(`${API_SERVICE}/delete_order/${orderId}/${userId}`)
+      .then((res) => {
+        console.log(res.data);
+        setToggler(!toggler);
       })
-      .catch(err => {
-        console.log(err)
-      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   // Edit a order
-  let [openEditDialog, setOpenEditDialog] = useState(false)
-  let [orderId, setOrderId] = useState()
+  let [openEditDialog, setOpenEditDialog] = useState(false);
+  let [orderId, setOrderId] = useState();
   let [orderToEdit, setOrderToEdit] = useState({
     type: 1,
     invoiceNumber: "",
@@ -570,55 +644,64 @@ const OrdersList = () => {
 
     status: 1,
     orderDate: new Date(),
-    amount: ""
-  })
+    amount: "",
+  });
 
   function handleCloseEditor() {
-    setOpenEditDialog(false)
+    setOpenEditDialog(false);
   }
 
   function openEditor(id) {
-    console.log(id)
-    setOrderId(id)
-    setOpenEditDialog(true)
+    console.log(id);
+    setOrderId(id);
+    setOpenEditDialog(true);
   }
 
   useEffect(() => {
-    if (!orderId || !userId)
-      return
+    if (!orderId || !userId) return;
 
-    axios.get(`${API_SERVICE}/get_order_by_id/${orderId}/${userId}`)
-      .then(res => {
-        console.log(res.data)
-        setOrderToEdit(res.data)
+    axios
+      .get(`${API_SERVICE}/get_order_by_id/${orderId}/${userId}`)
+      .then((res) => {
+        console.log(res.data);
+        setOrderToEdit(res.data);
       })
-      .catch(err => {
-        console.log(err)
-      })
-
-  }, [orderId])
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [orderId]);
 
   function editOrder() {
-    if (!orderId || !userId)
-      return
+    if (!orderId || !userId) return;
 
-    // Check if the input fields are vacant if so then display an error message 
-    if ((!orderToEdit.name || !orderToEdit.invoiceNumber || !orderToEdit.phone || !orderToEdit.email || !orderToEdit.amount || !orderToEdit.status)
-      || (parseInt(orderToEdit.type) === 1 && (!orderToEdit.waiter || !orderToEdit.table))
-      || (parseInt(orderToEdit.type) !== 1 && !orderToEdit.from)) {
+    // Check if the input fields are vacant if so then display an error message
+    if (
+      !orderToEdit.name ||
+      !orderToEdit.invoiceNumber ||
+      !orderToEdit.phone ||
+      !orderToEdit.email ||
+      !orderToEdit.amount ||
+      !orderToEdit.status ||
+      (parseInt(orderToEdit.type) === 1 &&
+        (!orderToEdit.waiter || !orderToEdit.table)) ||
+      (parseInt(orderToEdit.type) !== 1 && !orderToEdit.from)
+    ) {
       setOpen(true);
-      return
+      return;
     }
 
-    axios.patch(`${API_SERVICE}/edit_order/${orderId}/${userId}`, { ...orderToEdit })
-      .then(res => {
-        console.log(res.data)
-        handleCloseEditor()
-        setToggler(!toggler)
+    axios
+      .patch(`${API_SERVICE}/edit_order/${orderId}/${userId}`, {
+        ...orderToEdit,
       })
-      .catch(err => {
-        console.log(err)
+      .then((res) => {
+        console.log(res.data);
+        handleCloseEditor();
+        setToggler(!toggler);
       })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   // Snackbar
@@ -629,7 +712,7 @@ const OrdersList = () => {
   };
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -650,16 +733,16 @@ const OrdersList = () => {
   );
 
   function getFormattedDate(date) {
-    date = new Date(date)
+    date = new Date(date);
     var year = date.getFullYear();
 
     var month = (1 + date.getMonth()).toString();
-    month = month.length > 1 ? month : '0' + month;
+    month = month.length > 1 ? month : "0" + month;
 
     var day = date.getDate().toString();
-    day = day.length > 1 ? day : '0' + day;
+    day = day.length > 1 ? day : "0" + day;
 
-    return day + ' / ' + month + ' / ' + year;
+    return day + " / " + month + " / " + year;
   }
 
   return (
@@ -673,23 +756,17 @@ const OrdersList = () => {
       />
 
       {/* Dialog for editing and adding orders */}
-      <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor} >
+      <Dialog maxWidth="lg" open={openEditDialog} onClose={handleCloseEditor}>
         <Box sx={{ width: "100%" }}>
           <Container sx={{ mt: 4, mb: 4 }} maxWidth="sm">
             <Typography sx={{ mt: 1 }} variant="h5">
               Order :
             </Typography>
 
-
             <Grid container spacing={1} sx={{ p: 1 }}>
-
               <Grid item xs={12}>
                 <InputLabel>Order Type</InputLabel>
-                <Select
-                  disabled
-                  fullWidth
-                  value={parseInt(orderToEdit?.type)}
-                >
+                <Select disabled fullWidth value={parseInt(orderToEdit?.type)}>
                   <MenuItem value={1}>Dine-in</MenuItem>
                   <MenuItem value={2}>Delivery</MenuItem>
                   <MenuItem value={3}>Pickup</MenuItem>
@@ -703,14 +780,14 @@ const OrdersList = () => {
                   label="Invoice Number"
                   name="invoiceNumber"
                   onChange={(e) => {
-                    let { name, value } = e.target
+                    let { name, value } = e.target;
 
                     setOrderToEdit((prev) => {
                       return {
                         ...prev,
-                        [name]: value
-                      }
-                    })
+                        [name]: value,
+                      };
+                    });
                   }}
                   value={orderToEdit?.invoiceNumber}
                   variant="outlined"
@@ -724,14 +801,14 @@ const OrdersList = () => {
                   label="Name"
                   name="name"
                   onChange={(e) => {
-                    let { name, value } = e.target
+                    let { name, value } = e.target;
 
                     setOrderToEdit((prev) => {
                       return {
                         ...prev,
-                        [name]: value
-                      }
-                    })
+                        [name]: value,
+                      };
+                    });
                   }}
                   value={orderToEdit?.name}
                   variant="outlined"
@@ -745,14 +822,14 @@ const OrdersList = () => {
                   label="Email"
                   name="email"
                   onChange={(e) => {
-                    let { name, value } = e.target
+                    let { name, value } = e.target;
 
                     setOrderToEdit((prev) => {
                       return {
                         ...prev,
-                        [name]: value
-                      }
-                    })
+                        [name]: value,
+                      };
+                    });
                   }}
                   value={orderToEdit?.email}
                   variant="outlined"
@@ -766,21 +843,21 @@ const OrdersList = () => {
                   label="Phone Number"
                   name="phone"
                   onChange={(e) => {
-                    let { name, value } = e.target
+                    let { name, value } = e.target;
 
                     setOrderToEdit((prev) => {
                       return {
                         ...prev,
-                        [name]: value
-                      }
-                    })
+                        [name]: value,
+                      };
+                    });
                   }}
                   value={orderToEdit?.phone}
                   variant="outlined"
                 />
               </Grid>
 
-              {parseInt(orderToEdit?.type) === 1 &&
+              {parseInt(orderToEdit?.type) === 1 && (
                 <>
                   <Grid item xs={6}>
                     <TextField
@@ -789,14 +866,14 @@ const OrdersList = () => {
                       label="Waiter"
                       name="waiter"
                       onChange={(e) => {
-                        let { name, value } = e.target
+                        let { name, value } = e.target;
 
                         setOrderToEdit((prev) => {
                           return {
                             ...prev,
-                            [name]: value
-                          }
-                        })
+                            [name]: value,
+                          };
+                        });
                       }}
                       value={orderToEdit?.waiter}
                       variant="outlined"
@@ -810,23 +887,23 @@ const OrdersList = () => {
                       label="Table"
                       name="table"
                       onChange={(e) => {
-                        let { name, value } = e.target
+                        let { name, value } = e.target;
 
                         setOrderToEdit((prev) => {
                           return {
                             ...prev,
-                            [name]: value
-                          }
-                        })
+                            [name]: value,
+                          };
+                        });
                       }}
                       value={orderToEdit?.table}
                       variant="outlined"
                     />
                   </Grid>
                 </>
-              }
+              )}
 
-              {parseInt(orderToEdit?.type) !== 1 &&
+              {parseInt(orderToEdit?.type) !== 1 && (
                 <>
                   <Grid item xs={12}>
                     <TextField
@@ -835,22 +912,21 @@ const OrdersList = () => {
                       label="From"
                       name="from"
                       onChange={(e) => {
-                        let { name, value } = e.target
+                        let { name, value } = e.target;
 
                         setOrderToEdit((prev) => {
                           return {
                             ...prev,
-                            [name]: value
-                          }
-                        })
+                            [name]: value,
+                          };
+                        });
                       }}
                       value={orderToEdit?.from}
                       variant="outlined"
                     />
                   </Grid>
                 </>
-              }
-
+              )}
 
               <Grid item xs={6}>
                 <Select
@@ -860,9 +936,9 @@ const OrdersList = () => {
                     setOrderToEdit((prev) => {
                       return {
                         ...prev,
-                        status: e.target.value
-                      }
-                    })
+                        status: e.target.value,
+                      };
+                    });
                   }}
                 >
                   <MenuItem value={1}>Pending</MenuItem>
@@ -878,14 +954,14 @@ const OrdersList = () => {
                   label="Amount"
                   name="amount"
                   onChange={(e) => {
-                    let { name, value } = e.target
+                    let { name, value } = e.target;
 
                     setOrderToEdit((prev) => {
                       return {
                         ...prev,
-                        [name]: value
-                      }
-                    })
+                        [name]: value,
+                      };
+                    });
                   }}
                   value={orderToEdit?.amount}
                   variant="outlined"
@@ -900,22 +976,33 @@ const OrdersList = () => {
                       setOrderToEdit((prev) => {
                         return {
                           ...prev,
-                          orderDate: newValue
-                        }
-                      })
+                          orderDate: newValue,
+                        };
+                      });
                     }}
                     renderInput={(params) => (
-                      <TextField sx={{ marginBottom: "1rem" }} fullWidth {...params} />
+                      <TextField
+                        sx={{ marginBottom: "1rem" }}
+                        fullWidth
+                        {...params}
+                      />
                     )}
                   />
                 </LocalizationProvider>
               </Grid>
-
             </Grid>
 
-            <Stack sx={{ float: "right", mt: 2, mb: 2 }} direction="row" spacing={1}>
-
-              <Button variant="outlined" color="info" onClick={handleCloseEditor} sx={{ width: "100px" }}>
+            <Stack
+              sx={{ float: "right", mt: 2, mb: 2 }}
+              direction="row"
+              spacing={1}
+            >
+              <Button
+                variant="outlined"
+                color="info"
+                onClick={handleCloseEditor}
+                sx={{ width: "100px" }}
+              >
                 Close
               </Button>
               <Button
@@ -931,7 +1018,7 @@ const OrdersList = () => {
         </Box>
       </Dialog>
 
-      <Dialog maxWidth="lg" open={openDialog} onClose={handleCloseDialog} >
+      <Dialog maxWidth="lg" open={openDialog} onClose={handleCloseDialog}>
         <Box sx={{ width: "100%" }}>
           <Container sx={{ mt: 4, mb: 4 }} maxWidth="sm">
             <Typography sx={{ mt: 1 }} variant="h5">
@@ -939,15 +1026,14 @@ const OrdersList = () => {
             </Typography>
 
             <Grid container spacing={1} sx={{ p: 1 }}>
-
               <Grid item xs={12}>
                 <InputLabel>Order Type</InputLabel>
                 <Select
                   fullWidth
                   value={orderType}
                   onChange={(e) => {
-                    setOrderType(e.target.value)
-                    formik.setFieldValue("type", e.target.value)
+                    setOrderType(e.target.value);
+                    formik.setFieldValue("type", e.target.value);
                   }}
                 >
                   <MenuItem value={1}>Dine-in</MenuItem>
@@ -958,10 +1044,14 @@ const OrdersList = () => {
 
               <Grid item xs={6}>
                 <TextField
-                  error={Boolean(formik.touched.invoiceNumber && formik.errors.invoiceNumber)}
+                  error={Boolean(
+                    formik.touched.invoiceNumber && formik.errors.invoiceNumber
+                  )}
                   fullWidth
                   type="text"
-                  helperText={formik.touched.invoiceNumber && formik.errors.invoiceNumber}
+                  helperText={
+                    formik.touched.invoiceNumber && formik.errors.invoiceNumber
+                  }
                   label="Invoice Number"
                   name="invoiceNumber"
                   onBlur={formik.handleBlur}
@@ -983,7 +1073,8 @@ const OrdersList = () => {
                   onChange={formik.handleChange}
                   value={formik.values.name}
                   variant="outlined"
-                /> </Grid>
+                />{" "}
+              </Grid>
 
               <Grid item xs={6}>
                 <TextField
@@ -1014,11 +1105,13 @@ const OrdersList = () => {
                 />
               </Grid>
 
-              {orderType === 1 &&
+              {orderType === 1 && (
                 <>
                   <Grid item xs={6}>
                     <TextField
-                      error={Boolean(formik.touched.waiter && formik.errors.waiter)}
+                      error={Boolean(
+                        formik.touched.waiter && formik.errors.waiter
+                      )}
                       fullWidth
                       helperText={formik.touched.waiter && formik.errors.waiter}
                       label="Waiter"
@@ -1032,7 +1125,9 @@ const OrdersList = () => {
 
                   <Grid item xs={6}>
                     <TextField
-                      error={Boolean(formik.touched.table && formik.errors.table)}
+                      error={Boolean(
+                        formik.touched.table && formik.errors.table
+                      )}
                       fullWidth
                       helperText={formik.touched.table && formik.errors.table}
                       label="Table"
@@ -1044,9 +1139,9 @@ const OrdersList = () => {
                     />
                   </Grid>
                 </>
-              }
+              )}
 
-              {orderType !== 1 &&
+              {orderType !== 1 && (
                 <>
                   <Grid item xs={12}>
                     <TextField
@@ -1062,16 +1157,15 @@ const OrdersList = () => {
                     />
                   </Grid>
                 </>
-              }
-
+              )}
 
               <Grid item xs={6}>
                 <Select
                   fullWidth
                   value={orderStatus}
                   onChange={(e) => {
-                    setOrderStatus(e.target.value)
-                    formik.setFieldValue("status", e.target.value)
+                    setOrderStatus(e.target.value);
+                    formik.setFieldValue("status", e.target.value);
                   }}
                 >
                   <MenuItem value={1}>Pending</MenuItem>
@@ -1103,16 +1197,28 @@ const OrdersList = () => {
                       formik.setFieldValue("orderDate", newValue);
                     }}
                     renderInput={(params) => (
-                      <TextField sx={{ marginBottom: "1rem" }} fullWidth {...params} />
+                      <TextField
+                        sx={{ marginBottom: "1rem" }}
+                        fullWidth
+                        {...params}
+                      />
                     )}
                   />
                 </LocalizationProvider>
               </Grid>
-
             </Grid>
 
-            <Stack sx={{ float: "right", mt: 2, mb: 2 }} direction="row" spacing={1}>
-              <Button variant="outlined" color="info" onClick={handleCloseDialog} sx={{ width: "100px" }}>
+            <Stack
+              sx={{ float: "right", mt: 2, mb: 2 }}
+              direction="row"
+              spacing={1}
+            >
+              <Button
+                variant="outlined"
+                color="info"
+                onClick={handleCloseDialog}
+                sx={{ width: "100px" }}
+              >
                 Close
               </Button>
               <Button
@@ -1174,7 +1280,14 @@ const OrdersList = () => {
                 sx={{ width: "15%", ml: 1 }}
                 label="To *"
               />
-              <Button size="small" sx={{ ml: 1 }} variant="contained" onClick={() => { setOpenDialog(true) }}>
+              <Button
+                size="small"
+                sx={{ ml: 1 }}
+                variant="contained"
+                onClick={() => {
+                  setOpenDialog(true);
+                }}
+              >
                 Add Order
               </Button>
               <Button size="small" sx={{ ml: 1 }} variant="contained">
@@ -1185,11 +1298,29 @@ const OrdersList = () => {
               </Button>
             </Box>
             {type === 0 ? (
-              <DineInTable userId={userId} toggler={toggler} deleteOrder={deleteOrder} openEditor={openEditor} getFormattedDate={getFormattedDate} />
+              <DineInTable
+                userId={userId}
+                toggler={toggler}
+                deleteOrder={deleteOrder}
+                openEditor={openEditor}
+                getFormattedDate={getFormattedDate}
+              />
             ) : type === 1 ? (
-              <DeliveryTable userId={userId} toggler={toggler} deleteOrder={deleteOrder} openEditor={openEditor} getFormattedDate={getFormattedDate} />
+              <DeliveryTable
+                userId={userId}
+                toggler={toggler}
+                deleteOrder={deleteOrder}
+                openEditor={openEditor}
+                getFormattedDate={getFormattedDate}
+              />
             ) : type === 2 ? (
-              <PickupTable userId={userId} toggler={toggler} deleteOrder={deleteOrder} openEditor={openEditor} getFormattedDate={getFormattedDate} />
+              <PickupTable
+                userId={userId}
+                toggler={toggler}
+                deleteOrder={deleteOrder}
+                openEditor={openEditor}
+                getFormattedDate={getFormattedDate}
+              />
             ) : null}
           </Box>
         </Container>
