@@ -122,38 +122,7 @@ const Templates = () => {
       });
   }
 
-  //   function editOrder() {
-  //     if (!orderId || !userId) return;
 
-  //     // Check if the input fields are vacant if so then display an error message
-  //     if (
-  //       !orderToEdit.name ||
-  //       !orderToEdit.invoiceNumber ||
-  //       !orderToEdit.phone ||
-  //       !orderToEdit.email ||
-  //       !orderToEdit.amount ||
-  //       !orderToEdit.status ||
-  //       (parseInt(orderToEdit.type) === 1 &&
-  //         (!orderToEdit.waiter || !orderToEdit.table)) ||
-  //       (parseInt(orderToEdit.type) !== 1 && !orderToEdit.from)
-  //     ) {
-  //       setOpen(true);
-  //       return;
-  //     }
-
-  //     axios
-  //       .patch(`${API_SERVICE}/edit_order/${orderId}/${userId}`, {
-  //         ...orderToEdit,
-  //       })
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         handleCloseEditor();
-  //         setToggler(!toggler);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
 
   function deleteTemplate(msgId) {
     axios

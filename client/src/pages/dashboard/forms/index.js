@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AuthGuard } from "../../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../../components/dashboard/dashboard-layout";
 import {
@@ -27,10 +27,17 @@ import {
   Toolbar,
   Divider,
   Rating,
+  Snackbar,
 } from "@mui/material";
 import { Add, Edit, Delete } from "@mui/icons-material";
 import Link from "next/link";
 import CloseIcon from "@mui/icons-material/Close";
+import { Clipboard as ClipboardIcon } from "../../../icons/clipboard";
+import { BASE_URL } from "../../../config";
+import { useAuth } from "../../../hooks/use-auth";
+import MuiAlert from "@mui/material/Alert";
+import axios from "axios";
+import { API_SERVICE } from "../../../config";
 
 const style = {
   position: "absolute",
@@ -72,10 +79,42 @@ function a11yProps(index) {
 const Repair = (props) => {
   const [open, setOpen] = React.useState(false);
   const [next, setNext] = React.useState(false);
+  const [feedbacks, setFeedbacks] = React.useState([]);
+  const [toggler, setToggler] = React.useState(false);
+
+  const { user } = useAuth();
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const copyToClipboard = (content) => {
+    const el = document.createElement("textarea");
+    el.value = content;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+  };
+
+  const [snackOpen, setSnackOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setSnackOpen(true);
+  };
+
+  const handleSnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackOpen(false);
+  };
+
   const handleOpen = () => {
     setOpen(true);
     setNext(false);
   };
+
   const handleClose = () => setOpen(false);
 
   const [value, setValue] = React.useState(0);
@@ -84,12 +123,41 @@ const Repair = (props) => {
     setValue(newValue);
   };
 
+  function deleteFeedback(feedbackId) {
+    if (!user?.id) return;
+    axios
+      .delete(`${API_SERVICE}/delete_feedback/${feedbackId}/${user.id}`)
+      .then((res) => {
+        console.log(res.data);
+        setToggler(!toggler);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    if (!user?.id) return;
+    axios
+      .get(`${API_SERVICE}/get_feedbacks/${user.id}`)
+      .then((res) => {
+        console.log("Fetched Templates");
+        console.log(res.data);
+        setFeedbacks(res.data.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [user?.id, toggler]);
+
   const columns = [
     { label: "Sr", minWidth: 10, maxWidth: 30 },
-    { label: "First Name", minWidth: 50, maxWidth: 100 },
-    { label: "Last Name", minWidth: 50, maxWidth: 100 },
-    { label: "Phone Number", minWidth: 50, maxWidth: 100 },
+    // { label: "First Name", minWidth: 50, maxWidth: 100 },
+    // { label: "Last Name", minWidth: 50, maxWidth: 100 },
+    // { label: "Phone Number", minWidth: 50, maxWidth: 100 },
+
     { label: "Rating", minWidth: 50, maxWidth: 100 },
+    { label: "Comment", minWidth: 50, maxWidth: 100 },
     { label: "Date", minWidth: 50, maxWidth: 100 },
     { label: "Actions", minWidth: 50, maxWidth: 100 },
   ];
@@ -126,12 +194,14 @@ const Repair = (props) => {
                 </Grid>
               </Grid>
             </Grid>
+
             <TextField
               size="large"
               label="Form Title"
               fullWidth
               sx={{ my: 1, mt: 2 }}
             />
+
             <Divider variant="middle" sx={{ my: 2 }} />
             <TextField
               select
@@ -178,6 +248,16 @@ const Repair = (props) => {
             </Box>
           </Box>
         </Dialog>
+        <Snackbar
+          autoHideDuration={2000}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={snackOpen}
+          onClose={handleSnackClose}
+        >
+          <Alert onClose={handleSnackClose} severity="success">
+            "Text Copied to Clipboard"
+          </Alert>
+        </Snackbar>
         <Grid
           item
           container
@@ -187,11 +267,26 @@ const Repair = (props) => {
           <Grid item>
             <Typography variant="h4">Forms</Typography>
           </Grid>
+
           <Grid item>
+            <Button
+              style={{ margin: "0 20px" }}
+              startIcon={<ClipboardIcon fontSize="small" />}
+              variant="contained"
+              onClick={() => {
+                console.log(BASE_URL);
+                copyToClipboard(
+                  `${BASE_URL}/dashboard/forms/feedback/${user.id}`
+                );
+                handleClick();
+              }}
+            >
+              Copy
+            </Button>
             <Button
               variant="contained"
               startIcon={<Add />}
-              href="/dashboard/forms/feedback"
+              href="/dashboard/forms/scanQR"
             >
               Add Feedback Form
             </Button>
@@ -202,17 +297,16 @@ const Repair = (props) => {
             <TableHead>
               <TableRow>
                 {columns.map((column, id) => (
-                  <TableCell align="center">{column.label}</TableCell>
+                  <TableCell key={id} align="center">
+                    {column.label}
+                  </TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, id) => (
-                <TableRow hover sx={{}}>
-                  <TableCell align="center">{id + 1}</TableCell>
-                  <TableCell align="center">{row.name}</TableCell>
-                  <TableCell align="center">{row.lname}</TableCell>
-                  <TableCell align="center">{row.num}</TableCell>
+              {feedbacks.map((row, index) => (
+                <TableRow key={row._id} hover sx={{}}>
+                  <TableCell align="center">{index + 1}</TableCell>
                   <TableCell align="center">
                     <Rating
                       defaultValue={row.rating}
@@ -220,12 +314,17 @@ const Repair = (props) => {
                       readOnly
                     />
                   </TableCell>
+                  <TableCell align="center">{row.message}</TableCell>
                   <TableCell align="center">{row.date}</TableCell>
                   <TableCell align="center">
-                    <IconButton size="small" color="primary">
+                    {/* <IconButton size="small" color="primary">
                       <Edit />
-                    </IconButton>
-                    <IconButton size="small" sx={{ color: "error.main" }}>
+                    </IconButton> */}
+                    <IconButton
+                      onClick={() => deleteFeedback(row._id)}
+                      size="small"
+                      sx={{ color: "error.main" }}
+                    >
                       <Delete />
                     </IconButton>
                   </TableCell>

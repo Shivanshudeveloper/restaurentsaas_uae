@@ -1,25 +1,16 @@
 const mongoose = require("mongoose");
 
 const menuSchema = new mongoose.Schema({
-  itemname: {
-    type: String,
-    required: true,
-  },
-  categoryname: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: String,
-    required: true,
-  },
-  stock: {
-    type: Boolean,
+  rating: {
+    type: Number,
     required: true,
   },
   userId: {
     type: String,
     required: true,
+  },
+  message: {
+    type: String,
   },
   date: {
     type: Date,
@@ -27,5 +18,5 @@ const menuSchema = new mongoose.Schema({
   },
 });
 
-const menu = mongoose.model("menu", menuSchema);
+const menu = mongoose.model("feedback", menuSchema);
 module.exports = menu;

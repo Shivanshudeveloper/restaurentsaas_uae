@@ -11,6 +11,7 @@ const Reservation = require("../models/Reservation");
 const Category = require("../models/Category");
 const Menu = require("../models/Menu");
 const Template = require("../models/Template");
+const Feedback = require("../models/Feedback");
 
 // Add a new Reservation
 router.post("/add_reservation", (req, res) => {
@@ -440,6 +441,46 @@ router.patch("/edit_template/:templateId/:userId", async (req, res) => {
   );
 });
 
+//FEEDBACKS
+
+//Add new Feedback
+router.post("/add_feedback", (req, res) => {
+  console.log(req.body);
+  res.setHeader("Content-Type", "application/json");
+
+  const newTemplate = new Feedback({
+    ...req.body,
+  });
+
+  newTemplate.save((err) => {
+    if (err) res.status(400).json(`Error: ${err}`);
+    else res.status(200).send("created a new feedback");
+  });
+});
+
+// Get all the feedbacks
+router.get("/get_feedbacks/:userId", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+
+  Feedback.find({ userId: req.params.userId }, (err, templates) => {
+    if (err) res.status(400).json(`Error: ${err}`);
+    else res.status(200).json(templates);
+  });
+});
+
+// Delete a feedback
+router.delete("/delete_feedback/:feedbackId/:userId", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+
+  Feedback.deleteOne(
+    { _id: req.params.feedbackId, userId: req.params.userId },
+    (err) => {
+      if (err) res.status(400).json(`Error: ${err}`);
+      else res.status(200).send("Deleted one feedback successfully!");
+    }
+  );
+});
+
 // TEST
 // @GET TEST
 // GET
@@ -479,7 +520,7 @@ router.get("/getcategorydata", (req, res) => {
 // Database CRUD Operations
 // @POST Request to add item in cart
 // POST
-router.post("/addmenuitemdata", (req, res) => {
+router.post("/addmenuitem", (req, res) => {
   const { itemname, categoryname, price, stock, userId } = req.body;
 
   const addMenu = new Menu({
@@ -497,14 +538,47 @@ router.post("/addmenuitemdata", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/getallitemdata", (req, res) => {
+router.get("/getallitems/:userId", (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  Menu.find({})
+  Menu.find({ userId: req.params.userId })
     .sort({ date: -1 })
     .then((data) => {
       res.status(200).json(data);
     })
     .catch((err) => res.status(400).json(`Error: ${err}`));
+});
+
+router.patch("/edit_menuitem/:itemId/:userId", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+
+  console.log(req.body);
+  console.log(req.params);
+
+  Menu.updateOne(
+    { _id: req.params.itemId, userId: req.params.userId },
+    {
+      $set: req.body,
+    },
+    (err, result) => {
+      if (err) res.status(400).json(`Error: ${err}`);
+      else {
+        console.log(result);
+        res.status(200).send("Edited an order");
+      }
+    }
+  );
+});
+
+router.delete("/delete_menuitem/:itemId/:userId", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  console.log(req.params);
+  Menu.deleteOne(
+    { _id: req.params.itemId, userId: req.params.userId },
+    (err) => {
+      if (err) res.status(400).json(`Error: ${err}`);
+      else res.status(200).send("Deleted one feedback successfully!");
+    }
+  );
 });
 
 module.exports = router;
